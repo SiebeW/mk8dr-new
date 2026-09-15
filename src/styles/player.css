@@ -1,0 +1,99 @@
+.player-card {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  min-height: 64px;
+  overflow: hidden;
+
+  border: 1px solid var(--border-dark);
+  border-radius: 14px;
+}
+
+.player-card::before {
+  content: "";
+
+  position: absolute;
+  inset: -8px;
+
+  background-image:
+    url("https://i.imgur.com/fmUqxYm.jpg");
+
+  background-position: center;
+  background-size: cover;
+
+  filter: blur(1px);
+}
+
+.player-card__number,
+.player-card__loadout {
+  position: relative;
+  z-index: 1;
+}
+
+.player-card__number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+  aspect-ratio: 1;
+  flex: 0 0 32px;
+
+  margin: 0 0.5rem;
+
+  border-radius: 50%;
+
+  background-color: var(--player-color);
+  color: #fff;
+
+  font-family: var(--heading);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.player-card__loadout {
+  flex: 1;
+  min-width: 0;
+
+  padding: 0.25rem 0.5rem;
+}
+
+.player-card__images {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  min-width: 0;
+}
+
+.player-card__images img {
+  width: 52px;
+  height: 52px;
+
+  flex-shrink: 1;
+
+  object-fit: contain;
+}
+
+.player-card__images .player-card__character {
+  width: 52px;
+  height: 52px;
+}
+
+.player-card__description {
+  margin: 0.15rem 0 0;
+
+  overflow: hidden;
+
+  font-size: 0.75rem;
+  line-height: 1.2;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  color: var(--text-h);
+}

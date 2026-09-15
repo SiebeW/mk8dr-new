@@ -1,0 +1,11 @@
+.players {
+  display: grid;
+  gap: 0.25rem;
+
+  padding: 0.25rem;
+}
+@media (min-width: 700px) {
+  .players {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

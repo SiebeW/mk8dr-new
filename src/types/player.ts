@@ -17,6 +17,8 @@ export interface PlayerLoadout {
 export interface ResolvedPlayerLoadout {
   character: Character;
   characterVariant: CharacterVariant | null;
+  characterImageUrl: string;
+  characterDisplayName: string;
 
   body: VehicleBody;
   tires: VehiclePart;

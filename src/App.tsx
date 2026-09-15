@@ -1,29 +1,96 @@
 import { useState } from "react";
 
 import { marioKartData } from "./assets/marioKartData";
+
+import { OptionsToggle } from "./components/OptionsToggle";
+import { Options } from "./components/Options";
 import { Player } from "./components/Player";
+
+import "./styles/app.css";
+
 import type { Player as PlayerType } from "./types/player";
-import { randomizeLoadout } from "./util/randomizer";
+
+import {
+  DEFAULT_RANDOMIZER_OPTIONS,
+  randomizePlayers,
+  type RandomizerOptions,
+} from "./util/randomizer";
+
+
+import { resolveLoadout } from "./util/resolveLoadout";
+
+import {
+  localizeLoadout,
+  type GameRegion,
+} from "./util/localizeLoadout";
+
+function createPlayers(
+  playerCount: number,
+  options: RandomizerOptions,
+): PlayerType[] {
+  const loadouts = randomizePlayers(
+    marioKartData,
+    playerCount,
+    options,
+  );
+
+  return loadouts.map((loadout, index) => ({
+    id: index + 1,
+    loadout,
+  }));
+}
 
 function App() {
-  const [player, setPlayer] = useState<PlayerType>({
-    id: 1,
-    loadout: null,
-  });
+  const [playerCount, setPlayerCount] = useState(8);
 
-  function randomizePlayer() {
-    setPlayer({
-      ...player,
-      loadout: randomizeLoadout(marioKartData),
-    });
+  const [showOptions, setShowOptions] = useState(false);
+  const [options, setOptions] = useState<RandomizerOptions>(
+    DEFAULT_RANDOMIZER_OPTIONS,
+  );
+
+  const [region, setRegion] = useState<GameRegion>("PAL");
+
+  const [players, setPlayers] = useState<PlayerType[]>(() =>
+    createPlayers(8, DEFAULT_RANDOMIZER_OPTIONS),
+  );
+
+  function randomizeAllPlayers() {
+    setPlayers(createPlayers(playerCount, options));
   }
 
   return (
     <main>
-      <Player
-        player={player}
-        onRandomize={randomizePlayer}
-      />
+      <header className="app-header">
+        <OptionsToggle
+          isOpen={showOptions}
+          onToggle={() => setShowOptions(current => !current)}
+        />
+
+        <button
+          className="randomize-button"
+          type="button"
+          onClick={randomizeAllPlayers}
+        >
+          Randomize
+        </button>
+      </header>
+
+      <div className="players">
+        {players.map(player => (
+          <Player
+            key={player.id}
+            player={player}
+            loadout={
+              player.loadout
+                ? localizeLoadout(
+                  resolveLoadout(player.loadout, marioKartData),
+                  region,
+                )
+                : null
+            }
+          />
+        ))}
+      </div>
     </main>
   );
 }
