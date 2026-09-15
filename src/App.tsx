@@ -56,10 +56,13 @@ function App() {
   function randomizeAllPlayers() {
     setPlayers(createPlayers(playerCount, options));
   }
-
   function handleOptionsChange(nextOptions: RandomizerOptions) {
     setOptions(nextOptions);
     setPlayers(createPlayers(playerCount, nextOptions));
+  }
+  function handlePlayerCountChange(nextPlayerCount: number) {
+    setPlayerCount(nextPlayerCount);
+    setPlayers(createPlayers(nextPlayerCount, options));
   }
 
   return (
@@ -86,7 +89,7 @@ function App() {
           playerCount={playerCount}
           options={options}
           region={region}
-          onPlayerCountChange={setPlayerCount}
+          onPlayerCountChange={handlePlayerCountChange}
           onOptionsChange={handleOptionsChange}
           onRegionChange={setRegion}
         />
