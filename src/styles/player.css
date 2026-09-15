@@ -96,4 +96,7 @@
   white-space: nowrap;
 
   color: var(--text-h);
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 0.15em 0.25em;
+  border-radius: 0.5em;
 }
