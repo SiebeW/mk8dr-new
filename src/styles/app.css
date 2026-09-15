@@ -9,3 +9,47 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0.5rem 0.25rem 0.25rem;
+}
+
+.app-header button {
+  min-height: 40px;
+
+  padding: 0.5rem 0.9rem;
+
+  border: 1px solid var(--border-dark);
+  border-radius: 10px;
+
+  background: var(--bg);
+  color: var(--text-h);
+
+  font-family: var(--heading);
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    transform 15ms ease,
+    box-shadow 90ms ease,
+    background 90ms ease;
+}
+
+.app-header button:hover {
+  box-shadow: var(--shadow);
+}
+
+.app-header button:active {
+  transform: translateY(1px);
+}
+
+.randomize-button {
+  background: var(--accent) !important;
+  color: white !important;
+  border-color: var(--accent) !important;
+}

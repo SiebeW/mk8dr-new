@@ -16,7 +16,6 @@ import {
   type RandomizerOptions,
 } from "./util/randomizer";
 
-
 import { resolveLoadout } from "./util/resolveLoadout";
 
 import {
@@ -42,8 +41,8 @@ function createPlayers(
 
 function App() {
   const [playerCount, setPlayerCount] = useState(8);
-
   const [showOptions, setShowOptions] = useState(false);
+
   const [options, setOptions] = useState<RandomizerOptions>(
     DEFAULT_RANDOMIZER_OPTIONS,
   );
@@ -58,12 +57,19 @@ function App() {
     setPlayers(createPlayers(playerCount, options));
   }
 
+  function handleOptionsChange(nextOptions: RandomizerOptions) {
+    setOptions(nextOptions);
+    setPlayers(createPlayers(playerCount, nextOptions));
+  }
+
   return (
     <main>
       <header className="app-header">
         <OptionsToggle
           isOpen={showOptions}
-          onToggle={() => setShowOptions(current => !current)}
+          onToggle={() =>
+            setShowOptions(current => !current)
+          }
         />
 
         <button
@@ -75,6 +81,17 @@ function App() {
         </button>
       </header>
 
+      {showOptions && (
+        <Options
+          playerCount={playerCount}
+          options={options}
+          region={region}
+          onPlayerCountChange={setPlayerCount}
+          onOptionsChange={handleOptionsChange}
+          onRegionChange={setRegion}
+        />
+      )}
+
       <div className="players">
         {players.map(player => (
           <Player
@@ -83,7 +100,10 @@ function App() {
             loadout={
               player.loadout
                 ? localizeLoadout(
-                  resolveLoadout(player.loadout, marioKartData),
+                  resolveLoadout(
+                    player.loadout,
+                    marioKartData,
+                  ),
                   region,
                 )
                 : null

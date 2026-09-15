@@ -1,0 +1,119 @@
+.options {
+  margin: 0 0.25rem;
+  padding: 1rem;
+
+  border: 1px solid var(--border-dark);
+  border-radius: 14px;
+
+  text-align: left;
+}
+
+.options h2 {
+  margin-bottom: 1rem;
+}
+
+.options__player-count {
+  margin-bottom: 1rem;
+}
+
+.options__player-count label {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--text-h);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.options__player-count input {
+  width: 100%;
+}
+
+.options fieldset {
+  margin: 0;
+  padding: 0.75rem;
+
+  border: 1px solid var(--border-dark);
+  border-radius: 10px;
+
+  background: var(--bg);
+}
+
+.options fieldset + fieldset {
+  margin-top: 0.75rem;
+}
+
+.options legend {
+  padding: 0 0.35rem;
+
+  color: var(--text-h);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.options fieldset > label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  min-height: 32px;
+
+  color: var(--text);
+  font-size: 0.85rem;
+}
+
+.options__button-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.options__toggle {
+  flex: 1;
+  cursor: pointer;
+}
+
+.options__toggle input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.options__toggle span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 38px;
+  padding: 0 0.75rem;
+
+  border: 1px solid var(--border-dark);
+  border-radius: 8px;
+
+  background: var(--bg);
+  color: var(--text);
+
+  font-size: 0.8rem;
+  font-weight: 600;
+
+  transition:
+    background 120ms ease,
+    border-color 120ms ease,
+    color 120ms ease;
+}
+
+.options__toggle input:checked + span {
+  border-color: #0b6efd;
+  background: #0b6efd;
+  color: #fff;
+}
+
+.options__toggle input:focus-visible + span {
+  outline: 2px solid #0b6efd;
+  outline-offset: 2px;
+}
+
+.options__toggle input:disabled + span {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
