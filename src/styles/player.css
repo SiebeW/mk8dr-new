@@ -86,7 +86,6 @@
 
 .player-card__description {
   margin: 0.15rem 0 0;
-
   overflow: hidden;
 
   font-size: 0.75rem;
@@ -96,7 +95,8 @@
   white-space: nowrap;
 
   color: var(--text-h);
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: var(--description-bg);
+
   padding: 0.15em 0.25em;
   border-radius: 0.5em;
 }
