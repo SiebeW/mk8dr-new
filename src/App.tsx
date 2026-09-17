@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { marioKartData } from "./assets/marioKartData";
 
@@ -23,6 +23,14 @@ import {
   type GameRegion,
 } from "./util/localizeLoadout";
 
+const SETTINGS_STORAGE_KEY = "mkwrandomiser-settings";
+
+interface SavedSettings {
+  playerCount: number;
+  options: RandomizerOptions;
+  region: GameRegion;
+}
+
 function createPlayers(
   playerCount: number,
   options: RandomizerOptions,
@@ -39,27 +47,76 @@ function createPlayers(
   }));
 }
 
+function loadSavedSettings(): SavedSettings {
+  const saved = localStorage.getItem(SETTINGS_STORAGE_KEY);
+
+  if (!saved) {
+    return {
+      playerCount: 8,
+      options: DEFAULT_RANDOMIZER_OPTIONS,
+      region: "PAL",
+    };
+  }
+
+  try {
+    return JSON.parse(saved);
+  } catch {
+    return {
+      playerCount: 8,
+      options: DEFAULT_RANDOMIZER_OPTIONS,
+      region: "PAL",
+    };
+  }
+}
+
 function App() {
-  const [playerCount, setPlayerCount] = useState(8);
+  const [savedSettings] = useState<SavedSettings>(() =>
+    loadSavedSettings(),
+  );
+
+  const [playerCount, setPlayerCount] = useState(
+    savedSettings.playerCount,
+  );
+
   const [showOptions, setShowOptions] = useState(false);
 
   const [options, setOptions] = useState<RandomizerOptions>(
-    DEFAULT_RANDOMIZER_OPTIONS,
+    savedSettings.options,
   );
 
-  const [region, setRegion] = useState<GameRegion>("PAL");
+  const [region, setRegion] = useState<GameRegion>(
+    savedSettings.region,
+  );
 
   const [players, setPlayers] = useState<PlayerType[]>(() =>
-    createPlayers(8, DEFAULT_RANDOMIZER_OPTIONS),
+    createPlayers(
+      savedSettings.playerCount,
+      savedSettings.options,
+    ),
   );
+
+  useEffect(() => {
+    const settings: SavedSettings = {
+      playerCount,
+      options,
+      region,
+    };
+
+    localStorage.setItem(
+      SETTINGS_STORAGE_KEY,
+      JSON.stringify(settings),
+    );
+  }, [playerCount, options, region]);
 
   function randomizeAllPlayers() {
     setPlayers(createPlayers(playerCount, options));
   }
+
   function handleOptionsChange(nextOptions: RandomizerOptions) {
     setOptions(nextOptions);
     setPlayers(createPlayers(playerCount, nextOptions));
   }
+
   function handlePlayerCountChange(nextPlayerCount: number) {
     setPlayerCount(nextPlayerCount);
     setPlayers(createPlayers(nextPlayerCount, options));
@@ -103,12 +160,12 @@ function App() {
             loadout={
               player.loadout
                 ? localizeLoadout(
-                  resolveLoadout(
-                    player.loadout,
-                    marioKartData,
-                  ),
-                  region,
-                )
+                    resolveLoadout(
+                      player.loadout,
+                      marioKartData,
+                    ),
+                    region,
+                  )
                 : null
             }
           />

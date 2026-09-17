@@ -1,6 +1,5 @@
 import type {
     Player as PlayerType,
-
 } from "../types/player";
 import type { LocalizedPlayerLoadout } from "../util/localizeLoadout";
 
@@ -45,25 +44,25 @@ export function Player({ player, loadout }: PlayerProps) {
 
                         <img
                             src={loadout.body.imageUrl}
-                            alt={loadout.body.name}
+                            alt={loadout.body.displayName}
                         />
 
                         <img
                             src={loadout.tires.imageUrl}
-                            alt={loadout.tires.name}
+                            alt={loadout.tires.displayName}
                         />
 
                         <img
                             src={loadout.glider.imageUrl}
-                            alt={loadout.glider.name}
+                            alt={loadout.glider.displayName}
                         />
                     </div>
 
                     <p className="player-card__description">
                         {loadout.characterDisplayName} ·{" "}
-                        {loadout.body.name} ·{" "}
-                        {loadout.tires.name} ·{" "}
-                        {loadout.glider.name}
+                        {loadout.body.displayName} ·{" "}
+                        {loadout.tires.displayName} ·{" "}
+                        {loadout.glider.displayName}
                     </p>
                 </div>
             )}
